@@ -1,0 +1,7 @@
+.layout {
+    @apply bg-center bg-no-repeat bg-cover;
+}
+
+.layout.morning {
+    background-image: url('/images/mornin.png');
+}
