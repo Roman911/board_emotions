@@ -1,25 +1,33 @@
 'use client';
+import { FC, useState } from 'react';
 import * as Icons from '@/components/Icons';
-import { observer } from 'mobx-react';
-import { useStore } from '@/stores';
+import { twMerge } from 'tailwind-merge';
 
-const AddEmotion = observer(() => {
-	const { modalStore } = useStore();
-	// const [isOpenModal, setIsOpenModal] = useState(false);
+interface Props {
+	setIsOpen: (isOpen: boolean) => void;
+}
+
+const AddEmotion: FC<Props> = ({ setIsOpen }) => {
+	const [animation, setAnimation] = useState(false);
+
+	const onClick = () => {
+		setAnimation(true);
+		setIsOpen(true);
+		setTimeout(() => setAnimation(false), 600);
+	}
 
 	return (
 		<>
 			<div className='flex items-center justify-center'>
 				<button
-					onClick={() => modalStore.openModal()}
-					className='p-4 border-4 border-white rounded-full text-white cursor-pointer transition duration-300 ease-in-out hover:scale-105'
+					onClick={() => onClick()}
+					className={ twMerge('p-4 border-4 border-white rounded-full text-white cursor-pointer transition duration-300 ease-in-out hover:scale-105', animation && 'animate-jump-in animate-once animate-duration-500 animate-ease-in-out') }
 				>
-					<Icons.PlusIcon height={ 50 } width={ 50 } />
+					<Icons.PlusIcon height={ 40 } width={ 40 } />
 				</button>
 			</div>
-			{/*<AddEmotionModal isOpen={ isOpenModal } setIsOpen={ setIsOpenModal } />*/}
 		</>
 	)
-});
+};
 
 export default AddEmotion;

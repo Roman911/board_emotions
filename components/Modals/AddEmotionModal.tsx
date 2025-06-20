@@ -1,38 +1,69 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+import EmojiIcon from '@/components/Emoji/EmojiIcon';
+import type { EmojiIconsAll } from '@/types/emoji';
+import Button from '@/components/UI/Button';
+import CloseButton from '@/components/UI/CloseButton';
 
 interface Props {
 	isOpen: boolean;
 	setIsOpen: (isOpen: boolean) => void;
 }
 
-const AddEmotionModal: FC<Props> = ({ isOpen }) => {
+const emojiIcons: {id: number, emojiIcon: EmojiIconsAll}[] = [
+	{
+		id: 1,
+		emojiIcon: 'haha'
+	},
+	{
+		id: 2,
+		emojiIcon: 'sad'
+	},
+	{
+		id: 3,
+		emojiIcon: 'smile'
+	}
+];
+
+const AddEmotionModal: FC<Props> = ({ isOpen, setIsOpen }) => {
+	const [activeEmoji, setActiveEmoji] = useState<null | number>(null);
+
+	const onClick = (id: number) => {
+		setActiveEmoji(id);
+	}
+
+	const onCloseModal = () => {
+		setIsOpen(false);
+	}
+
 	return (
-		<div id="add-emotion-modal" aria-hidden="true" className={ twMerge('hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full', isOpen && 'flex') }>
-			<div className="relative p-4 w-full max-w-2xl max-h-full">
-				<div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-					<div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-						<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-							Terms of Service
+		<div id="add-emotion-modal" aria-hidden="true" className={ twMerge('hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black/80', isOpen && 'flex') }>
+			<div className={ twMerge('relative p-4 w-full max-w-2xl max-h-full', isOpen && 'animate-fade-down animate-once animate-duration-300') }>
+				<div className='relative rounded-lg shadow-sm bg-gray-700'>
+					<div className='flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-600'>
+						<h3 className='text-xl font-semibold text-white'>
+							Choose an emotion
 						</h3>
-						<button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
-							<svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-								<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-							</svg>
-							<span className="sr-only">Close modal</span>
-						</button>
+						<CloseButton title='Close modal' onClick={ onCloseModal } />
 					</div>
-					<div className="p-4 md:p-5 space-y-4">
-						<p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-							With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
-						</p>
-						<p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-							The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
-						</p>
+					<div className='p-4 md:p-5 space-y-4'>
+						<div className='grid grid-cols-6'>
+							{ emojiIcons.map(item => {
+								return <EmojiIcon key={ item.id } id={ item.id } emoji={ item.emojiIcon } onClick={ onClick } active={ activeEmoji }/>
+							}) }
+						</div>
+						<label htmlFor='message' className='block mb-2 text-sm font-medium text-white'>
+							Your message
+						</label>
+						<textarea
+							id='message' rows={ 4 }
+							className='block p-2.5 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
+							placeholder='Write your thoughts here...'
+						/>
 					</div>
-					<div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-						<button data-modal-hide="default-modal" type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-						<button data-modal-hide="default-modal" type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
+					<div className='flex items-center justify-end p-4 md:p-5 border-t rounded-b border-gray-600 gap-2'>
+						<Button title='Decline' color='secondary' />
+						<Button title='I accept' />
 					</div>
 				</div>
 			</div>
