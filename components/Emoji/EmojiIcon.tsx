@@ -1,3 +1,4 @@
+'use client';
 import { FC } from 'react';
 import * as Emoji from '@/components/Emoji';
 import type { EmojiIconsAll } from '@/types/emoji';
@@ -10,10 +11,10 @@ const EmojiIcons = {
 };
 
 interface Props {
-	id: number;
+	id: string;
 	emoji: EmojiIconsAll;
-	onClick?: (id: number) => void;
-	active?: null | number;
+	onClick?: (id: string) => void;
+	active?: null | string;
 }
 
 const EmojiIcon: FC<Props> = ({ id, emoji, active, onClick }) => {
