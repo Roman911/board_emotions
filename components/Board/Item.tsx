@@ -92,4 +92,6 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
 	}
 );
 
+Item.displayName = 'Item';
+
 export default observer(Item);
