@@ -1,8 +1,9 @@
-export type EmojiIconsAll = 'haha' | 'sad' | 'smile';
+export type EmojiIconsAll = 'angry' | 'cry' | 'haha' | 'sad' | 'smile' | 'sleep' | 'neutral' | 'face';
+export type Period = 'today' | 'week' | 'month';
 
 export interface IEmoji {
 	id: string;
 	nameEmotion: EmojiIconsAll;
-	comment: string;
+	message: string;
 	date?: Date;
 }

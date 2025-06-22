@@ -60,11 +60,11 @@ const AddEmotionModal: FC<Props> = observer(({ isOpen, setIsOpen }) => {
 			}));
 		}
 
-		if (activeEmoji && found && !errors) {
+		if (activeEmoji && found && message && !errors) {
 			emotionsStore.addEmotion({
 				id: `${new Date().getTime()}`,
 				nameEmotion: found.emotionName,
-				comment: 'haha',
+				message,
 			});
 			onCloseModal();
 		}
@@ -83,9 +83,9 @@ const AddEmotionModal: FC<Props> = observer(({ isOpen, setIsOpen }) => {
 					</div>
 					<div className='p-4 md:p-5 space-y-4'>
 						<div className='relative pb-6 mb-2'>
-							<div className='grid grid-cols-6'>
+							<div className='grid grid-cols-4 md:grid-cols-8 gap-2'>
 								{ emojiIconsAll.map(item => {
-									return <EmojiIcon key={ item.id } id={ item.id } emoji={ item.emotionName } onClick={ onClick } active={ activeEmoji }/>
+									return <EmojiIcon key={ item.id } id={ item.id } emoji={ item.emotionName } onClick={ onClick } active={ activeEmoji } isChoice={ true } />
 								}) }
 							</div>
 							{ errors && errors.emotionError && <ErrorBlock errorMessage={ errors.emotionError } /> }

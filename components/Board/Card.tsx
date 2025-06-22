@@ -1,34 +1,25 @@
-'use client';
 import { FC } from 'react';
-import type { IEmoji } from '@/types/emoji';
 import EmojiIcon from '@/components/Emoji/EmojiIcon';
-import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
+import React from 'react';
+import type { IEmoji } from '@/types/emoji';
 
 interface Props {
 	emoji: IEmoji;
 }
 
 const Card: FC<Props> = ({ emoji }) => {
-	const { id, nameEmotion, comment } = emoji;
-	const { attributes, listeners, setNodeRef, transform } = useDraggable({
-		id
-	});
-
-	const style = { transform: CSS.Transform.toString(transform) };
+	const { id, nameEmotion, message } = emoji;
 
 	return (
-		<div
-			ref={ setNodeRef }
-			{ ...listeners }
-			{ ...attributes }
-			style={ style }
-			className='flex flex-col items-center gap-4 rounded-lg bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500'
-		>
-			<h2>{ nameEmotion }</h2>
-			<EmojiIcon id={ id } emoji={ nameEmotion } />
-			<p>{ comment }</p>
-		</div>
+		<>
+			<div>
+				<EmojiIcon id={ id } emoji={ nameEmotion } className='w-20 h-20 md:w-32 md:h-32' />
+			</div>
+			<div className='flex flex-col md:items-center justify-center gap-4 w-full'>
+				<h2 className='text-xl font-semibold uppercase'>{ nameEmotion }</h2>
+				<p className='md:text-center'>{ message }</p>
+			</div>
+		</>
 	)
 };
 

@@ -1,0 +1,18 @@
+.board {
+    @apply bg-center bg-no-repeat bg-cover;
+}
+
+.board.morning {
+    background-image: url('/images/morning.png');
+    background-attachment: fixed;
+}
+
+.board.noon {
+    background-image: url('/images/noon.jpg');
+    background-attachment: fixed;
+}
+
+.board.night {
+    background-image: url('/images/night.jpg');
+    background-attachment: fixed;
+}

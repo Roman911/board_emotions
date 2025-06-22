@@ -17,16 +17,17 @@ const AddEmotion: FC<Props> = ({ setIsOpen }) => {
 	}
 
 	return (
-		<>
-			<div className='flex items-center justify-center'>
-				<button
-					onClick={() => onClick()}
-					className={ twMerge('p-4 border-4 border-white rounded-full text-white cursor-pointer transition duration-300 ease-in-out hover:scale-105', animation && 'animate-jump-in animate-once animate-duration-500 animate-ease-in-out') }
-				>
-					<Icons.PlusIcon height={ 40 } width={ 40 } />
-				</button>
-			</div>
-		</>
+		<div className='flex items-center justify-center fixed bottom-4 right-4 z-20 md:static'>
+			<button
+				onClick={() => onClick()}
+				className={ twMerge('p-2 flex items-center gap-4 text-red-700 md:text-gray-200 cursor-pointer transition duration-300 ease-in-out hover:scale-105', animation && 'animate-jump-in animate-once animate-duration-500 animate-ease-in-out') }
+			>
+					<span className='border-2 p-2 border-red-700 md:border-gray-200 rounded-full'>
+						<Icons.PlusIcon height={ 20 } width={ 20 } />
+					</span>
+				<span className='text-lg font-semibold hidden md:block'>Add emotion</span>
+			</button>
+		</div>
 	)
 };
 
